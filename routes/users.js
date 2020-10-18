@@ -28,17 +28,18 @@ router.post("/add",(req,res)=>{
         auth:{
             user:process.env.EMAIL,
             pass:process.env.PASSWORD
-        }
+        },
+        tls:{ rejectUnauthorized: false }
     };
 
     var transporter=nodemailer.createTransport(smtpConfig);
 
     let mailOptions={
-        from:'Keeper App',
+        from:'noteskeeperapp@gmail.com',
         to:req.body.email,
         subject:`Welcome ${req.body.userName} to Keeper App.`,
         
-        html:`<p>Greetings from Keeper App.Thank you for trying out our app.</p><p>We wish you a usful and  happy journey as you continue to use our app.</p><p>Your Keeper App password is : <h3>${req.body.password}</h3></p><p>Keeper App : An app that helps you manage your notes and keep your tasks for the day.</p>`
+        html:`<p>Greetings from Keeper App.Thank you for trying out our app.</p><p>Your Keeper App password is : <h3>${req.body.password}</h3></p><p>Keeper App : An app that helps you manage your notes and keeps your tasks for the day.</p>`
     };
 
     transporter.sendMail(mailOptions,function(err,data){
